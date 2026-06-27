@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ciralgo"
+version = "1.1.0"  # mirrors openapi.json info.version
+description = "Official Python SDK for the Ciralgo Platform API"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [
+    { name = "Ciralgo", email = "support@ciralgo.com" }
+]
+keywords = [
+    "ciralgo",
+    "openai",
+    "anthropic",
+    "llm",
+    "ai",
+    "compliance",
+    "eu-sovereignty"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    # httpx is the standard async-first HTTP client for Python SDKs in
+    # 2026. Mature, sync + async surfaces, types built in. We pin a wide
+    # range to be a polite dep. Customers may already have httpx pinned
+    # tighter in their own apps.
+    "httpx>=0.27,<1.0",
+    # typing-extensions for Python 3.9 / 3.10 to handle older TypedDict,
+    # Required, NotRequired that 3.11+ ships natively.
+    "typing-extensions>=4.5; python_version < '3.11'"
+]
+
+[project.urls]
+Homepage = "https://www.ciralgo.com"
+Documentation = "https://docs.ciralgo.com/sdk-python"
+Repository = "https://github.com/Ciralgo/ciralgo-python"
+Changelog = "https://github.com/Ciralgo/ciralgo-python/blob/main/CHANGELOG.md"
+Issues = "https://github.com/Ciralgo/ciralgo-python/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "respx>=0.21",  # httpx mocking, no live network in unit tests
+    "mypy>=1.10",
+    "ruff>=0.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ciralgo"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/ciralgo",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
