@@ -20,6 +20,8 @@ The package version mirrors `openapi.json info.version`. Bumping the API
 spec triggers a coordinated SDK release.
 """
 
+from importlib import metadata as _metadata
+
 from ciralgo.client import Client, AsyncClient
 from ciralgo.errors import (
     CiralgoError,
@@ -32,7 +34,11 @@ from ciralgo.errors import (
     InternalError,
 )
 
-__version__ = "1.1.0"
+try:
+    __version__ = _metadata.version("ciralgo")
+except _metadata.PackageNotFoundError:
+    # Package is not installed (running from a checkout without pip install -e).
+    __version__ = "0.0.0+unknown"
 
 __all__ = [
     "Client",

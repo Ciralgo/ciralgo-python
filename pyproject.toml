@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ciralgo"
-version = "1.1.1"  # mirrors openapi.json info.version
+version = "1.1.2"  # mirrors openapi.json info.version
 description = "Official Python SDK for the Ciralgo Platform API"
 readme = "README.md"
 requires-python = ">=3.9"

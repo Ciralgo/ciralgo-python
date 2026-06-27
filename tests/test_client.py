@@ -383,5 +383,12 @@ class TestAsyncClient:
 
 
 class TestPackageMetadata:
-    def test_version_string(self):
-        assert __version__ == "1.1.0"
+    def test_version_string_is_semver_shaped(self):
+        # __version__ is derived at runtime from package metadata so it
+        # tracks pyproject.toml automatically. We only assert it parses
+        # as a non-empty semver-shaped string.
+        assert isinstance(__version__, str)
+        assert __version__
+        parts = __version__.split(".")
+        assert len(parts) >= 2
+        assert all(p.split("+")[0].isdigit() or p == "0" for p in parts[:3])
